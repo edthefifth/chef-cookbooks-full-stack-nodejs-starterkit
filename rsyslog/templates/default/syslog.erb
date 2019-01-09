@@ -1,0 +1,36 @@
+/var/log/messages{
+    rotate 3
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+}
+
+/var/log/debug{
+    rotate 3
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+}
+
+/var/log/mail.info{
+    rotate 3
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+    
+}
+
+/var/log/*log{
+    rotate 3
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+}

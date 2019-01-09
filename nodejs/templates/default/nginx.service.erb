@@ -1,0 +1,19 @@
+[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+Conflicts=nginx.service
+
+[Service]
+Type=forking
+PIDFile=/var/run/<%= @name %>.pid
+ExecStartPre=pid /var/run/<%= @name %>.pid; error_log stderr;
+ExecStart=/usr/sbin/nginx -c <%= @conf_file %>
+StandardOutput=<%= @log %>
+StandardError=<%= @err %>
+ExecReload=/usr/sbin/nginx -s reload
+ExecStop=/bin/kill -s QUIT $MAINPID
+TimeoutStartSec=450
+Restart=on-failure
+ 
+[Install]
+WantedBy=multi-user.target

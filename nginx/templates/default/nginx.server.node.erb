@@ -1,0 +1,66 @@
+ <% iter=0 %>
+  <% @apps.each_pair do |app_name,domain_name| %>
+  
+  
+
+    upstream <%= app_name %>{
+      <% if @load_balance_method -%>
+        <%= @load_balance_method %>;
+      <% end -%>
+      server 127.0.0.1:<%= (@local_port).to_i + iter %> weight=10 max_fails=<%= @max_fails %> fail_timeout=<%= @timeout %>s;
+    }
+
+
+    server {
+      listen   <%= @web_port %>;
+      server_name <%= domain_name %>;
+      gzip on;
+      access_log  <%= @log_dir %>/<%= app_name %>.log;
+      error_log  <%= @log_dir %>/<%= app_name %>.err notice;
+
+      location = /favicon.ico { 
+        alias <%= @lib_dir %>/static/favicon.ico; 
+        expires 365d;
+      }
+
+      location ~ \.txt { 
+        root <%= @lib_dir %>;
+      }
+
+      location ~ \.xml { 
+        root <%= @lib_dir%>;
+      }
+
+      location ~ \.html { 
+        root <%= @lib_dir %>;
+      }
+
+
+      location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Nginx-Proxy true;
+        proxy_pass       http://<%= app_name %>/;
+        proxy_redirect   off;
+      }
+
+      <% if @has_static -%>
+        location /static/ {
+          root <%= @lib_dir %>;
+          expires 365d;
+          add_header Cache-Control "public";
+          types{
+              text/css                css;
+              text/javascript          js;
+              image/gif               gif;
+              image/jpeg              jpg;
+              image/png               png;
+          }
+        }
+
+
+      <% end %>
+    }
+    <% iter+=1 %>
+  <% end %>  
+

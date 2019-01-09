@@ -1,0 +1,17 @@
+worker_processes  <%= node['nginx']['worker_processes'] %>;
+
+events {
+  worker_connections  <%= node['nginx']['worker_connections'] %>;
+}
+
+http{
+  
+  error_log  <%= @log_dir %>/error_log notice;
+
+  server {
+      access_log  <%= @log_dir %>/access_log;
+      listen         <%= @listen_port %>;
+      return 301 https://$host$request_uri;
+  }
+    
+}    

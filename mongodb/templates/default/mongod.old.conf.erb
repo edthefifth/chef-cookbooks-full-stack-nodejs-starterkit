@@ -1,0 +1,160 @@
+#mongod.conf
+
+#-------------------------------------------------------------------------------------
+#             Basic database configuration
+#-------------------------------------------------------------------------------------
+
+##fork process
+fork=true
+
+##Location of the database files
+dbpath=<%= @dbpath %>
+
+##port	 Port the mongod will listen on
+port=<%= @port %>
+
+##bind_ip Specific IP address that mongod will listen on
+<% if @ip %>
+bind_ip=<%=@ip%>
+<%  end %>
+
+##logpath	 Full filename path to where log messages will be written
+logpath=<%= @logpath %>
+
+##logappend	 Whether the log file will be appended (TRUE) or over-written (FALSE)
+logappend=true
+
+#-------------------------------------------------------------------------------------
+#             Logging
+#-------------------------------------------------------------------------------------
+
+##cpu	 Enable periodic logging (TRUE) of CPU utilization and I/O wait
+#cpu = true
+
+##verbose	 Verbose logging output
+#verbose=true
+
+#-------------------------------------------------------------------------------------
+#             Security
+#-------------------------------------------------------------------------------------
+
+##Turn authorization on/off. Off is currently the default
+#noauth = true
+
+##Turn authorization on/off. Off is currently the default
+<% if @authbool %>
+auth=<%=@authbool%>
+<%  end %>
+
+#-------------------------------------------------------------------------------------
+#             Administration & Monitoring
+#-------------------------------------------------------------------------------------
+
+##Disable the HTTP interface. The default port is 1000 more than the dbport
+#nohttpinterface = true
+
+##Turn on simple rest API
+#rest = true
+
+##Turns off server-side scripting. This will result in greatly limited functionality
+#noscripting = true
+
+##Turns off table scans. Any query that would do a table scan fails.
+#notablescan = true
+
+##Disable data file preallocation.
+noprealloc = true
+
+##Specify .ns file size for new databases in MB
+#nssize = 16
+
+##Account token for Mongo monitoring server.
+#mms-token=mytoken
+
+##Server name for Mongo monitoring server.
+#mms-name=monitor.example.com
+
+##Ping interval for Mongo monitoring server in seconds.
+#mms-interval=15 
+
+##Enable quota management	
+#quota = true
+
+##Determines the number of files per Database (default is 8)
+#quotaFiles=16
+
+#-------------------------------------------------------------------------------------
+#             Replication
+#-------------------------------------------------------------------------------------
+
+##Automatically resync if slave data is stale
+#autoresync=true
+
+##Size limit for in-memory storage of op ids in bytes
+#opIdMem=1000
+
+##Indicate that this instance is starting from a dbpath snapshot of the repl peer	 
+#fastsync=true
+
+##Custom size for replication operation log in MB.
+#oplogSize=100
+
+#-------------------------------------------------------------------------------------
+#             Master-slave Replication 
+#-------------------------------------------------------------------------------------
+
+##In replicated mongo databases, specify here whether this is a slave or master
+#master = true
+
+##In replicated mongo databases, specify here whether this is a slave or master
+#slave = true
+
+##Source to replicate from
+#source = master.example.com
+
+##specify a single database to replicate
+#only = master.example.com
+
+#-------------------------------------------------------------------------------------
+#             Replica Sets
+#-------------------------------------------------------------------------------------
+
+##Use replica sets with the specified logical set name.
+##Typically the optional seed host list need not be specified.
+#replSet=setname[/seedlist]
+<% if @replicaset_name %>
+replSet=<%= @replicaset_name %>
+<% end %>
+##Private key for cluster authentication
+<% if @keyfile %>
+keyFile=<%= @keyfile %>
+<% end %>
+
+#-------------------------------------------------------------------------------------
+#             Sharding
+#-------------------------------------------------------------------------------------
+##Indicates that this mongod will participate in sharding
+#shardsvr=true
+
+#-------------------------------------------------------------------------------------
+#             Journaling
+#-------------------------------------------------------------------------------------
+
+##Whether writes will be journaled or not. This feature enables fast recovery from crashes
+journal = true
+
+smallfiles = true
+
+#-------------------------------------------------------------------------------------
+#             SSL encryption
+#-------------------------------------------------------------------------------------
+
+#sslOnNormalPorts = 
+#sslPEMKeyFile = 
+#sslPEMKeyPassword =
+
+
+#-------------------------------------------------------------------------------------
+#             SSL encryption
+#-------------------------------------------------------------------------------------
+pidfilepath = <%= @pidfile %>

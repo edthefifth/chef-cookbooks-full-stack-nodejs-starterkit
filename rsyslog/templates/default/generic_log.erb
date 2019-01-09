@@ -1,0 +1,9 @@
+<%= @path %>/<%= @pattern %>{
+    rotate 7
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+    create 644 <%= @user %> <%= @user %>
+}

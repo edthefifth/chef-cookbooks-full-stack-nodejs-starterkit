@@ -1,0 +1,7 @@
+rs.remove("<%= @member_url %>")
+var conf = rs.conf()
+var status = rs.status()
+var new_members = []
+for(i in status.members){if(status.members[i].health === 1){new_members.push(conf.members[i]);}}
+conf.members = new_members
+rs.reconfig(conf, {force : true})

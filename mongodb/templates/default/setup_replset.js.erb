@@ -1,0 +1,7 @@
+config = {_id: '<%=@mongo_replset%>', members: 
+	[
+	{_id: 1, host: '<%=@main_url%>:<%=@main_port%>',priority:100}
+	]
+};
+rs.initiate(config);
+

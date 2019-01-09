@@ -1,0 +1,11 @@
+# Mercurial conf file
+[ui]
+username = <%=  @name %> <<%= @email %>>
+
+[trusted]
+groups=<%= @group %>
+
+[auth]
+repo.prefix=<%= @prefix %>
+repo.username=<%= @hg_user %>
+repo.password=<%= @hg_password %>

@@ -1,0 +1,30 @@
+{
+  "name": "setup",
+  "description": "set up env",
+  "long_description": "set up env",
+  "maintainer": "Ed James",
+  "maintainer_email": "ed@sullivation.com",
+  "license": "All rights reserved",
+  "platforms": {
+  },
+  "dependencies": {
+        "git":">= 0.6.6"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.0.0"
+}

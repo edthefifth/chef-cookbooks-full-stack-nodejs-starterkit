@@ -1,0 +1,18 @@
+[Unit]
+Description=systemd setup for <%= @name %>
+After=network.target
+
+[Service]
+User=<%= @user %>
+Environment=NODE_ENV=<%= @env %> NODE_PORT=<%= @port %>
+Type=simple
+User=<%= @user %>
+WorkingDirectory=<%= @dir %>
+ExecStart=/usr/local/bin/npm run start
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=<%= @name %>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

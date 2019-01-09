@@ -1,0 +1,13 @@
+#!/bin/sh
+
+BUCKET="<%= @bucket %>"
+TIMESTAMP=`date +%s`
+FILE="/vol/backup/<%= @db %>-$TIMESTAMP"
+TAR="$FILE.tar.gz"
+mkdir -p "/vol/backup"
+/usr/bin/mongodump --host <%= @host %>:<%= @port %> --db <%= @db %> --out "$FILE"
+cd /vol/backup
+tar -zcvf "$TAR" .
+s3cmd put --config="<%= @conf %>" "$TAR" "s3://$BUCKET/"
+
+rm -r "/vol/backup"

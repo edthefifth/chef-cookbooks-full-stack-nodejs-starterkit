@@ -1,0 +1,32 @@
+var conf = rs.conf()
+var status = rs.status()
+var hosts = ["<%= @host %>"]
+var new_members = [{"_id":0,"host":"<%= @host %>","priority":<%= @priority %>}]
+for(i in status.members){
+  var status_host = status.members[i].name
+  if(status.members[i].health === 1){
+  
+    if(status_host === hosts[0])
+    {
+      new_members[0]._id = status.members[i]._id
+      continue
+    }
+    for(k in conf.members){
+      var host = conf.members[k].host
+      if( host === status_host){
+
+
+        if(!conf.members[k].priority){conf.members[k].priority=parseInt(i);}
+        if(hosts.indexOf(host) < 0)
+        {
+          new_members.push(conf.members[k]);
+          hosts.push(host);
+        }  
+
+      }
+    }  
+  }  
+}
+
+conf.members = new_members
+rs.reconfig(conf, {force : true})

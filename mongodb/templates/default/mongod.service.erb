@@ -1,0 +1,19 @@
+[Unit]
+Description=High-performance, schema-free document-oriented database for <%= @name%>
+Wants=network.target
+After=network.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+User=<%= @user %>
+Group=<%= @group %>
+PIDFile=<%= @pidfile %>
+ExecStartPre=/bin/mkdir -p <%= @lib %>
+ExecStartPre=/bin/chown <%= @user %>:<%= @group %> <%= @lib %>
+ExecStart=/usr/bin/mongod -f <%= @config %>
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

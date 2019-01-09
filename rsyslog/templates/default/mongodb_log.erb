@@ -1,0 +1,18 @@
+#
+# Cookbook Name:: rsyslog
+# Recipe:: nginx
+#
+
+<%= @path %>/<%= @pattern %>{
+    daily
+    rotate 10
+    missingok
+    sharedscripts
+    compress
+    create 644 <%= @user %> <%= @user %>
+    su root root
+    postrotate
+        /bin/kill -SIGUSR1 `/bin/cat <%= @pid_file %>` 2> /dev/null
+        rm -rf <%= @path %>/<%= @pattern %>.????-??-??T??-??-?? 2> /dev/hull
+    endscript
+}
